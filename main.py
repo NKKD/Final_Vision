@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import math
 
 
-def surf():
+def surf(cap):
     # read camera output and save as scene image
     ret, frame = cap.read()
     img2 = frame
@@ -71,6 +71,7 @@ if __name__ == '__main__':
     # for localhost testing purpose
     Tcp_IP = '127.0.0.1'
     Tcp_Port = 8888
+
     cap = cv2.VideoCapture()
 
 
@@ -127,7 +128,7 @@ if __name__ == '__main__':
         conn.send(message_stop)
 
         # read camera output and save as scene image
-        ret, frame = cap.read()
+        ret, frame = cap.read(cap)
         img3 = frame
 
         # Initiate Surf detector
