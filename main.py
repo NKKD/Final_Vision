@@ -5,9 +5,6 @@ import matplotlib.pyplot as plt
 import math
 
 
-
-
-
 # -----------------------------------------------------------------------------------------------------------------------
 
 
@@ -252,6 +249,7 @@ if __name__ == '__main__':
         except Exception as e:
 
             print("Object detection un-success")
+
 
             conn.close()
             cap.release()
