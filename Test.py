@@ -4,8 +4,21 @@ import matplotlib.pyplot as plt
 import math
 import socket
 
-cap = cv2.VideoCapture(1)
-img1 = cv2.imread('arduino.jpg', 0)  # Target Object
+# initialize camera streaming
+cam = 1
+cap = cv2.VideoCapture(cam)
+
+# Target Object
+img1 = cv2.imread('arduino.jpg', 0)
+
+# # define the socket IP address and port number
+# Tcp_IP = '192.168.12.253'
+# Tcp_Port = 1025
+
+# for localhost testing purpose
+Tcp_IP = '127.0.0.1'
+Tcp_Port = 21
+
 
 def surf():
     print('surf starting')
@@ -63,9 +76,10 @@ def surf():
             print("Not enough matches are found - {}/{}".format(len(good), MIN_MATCH_COUNT))
             # matchesMask = None
 
-    return(M,dst)
+    return M, dst
 
-def calculate(R,dst):
+
+def calculate(R, dst):
     sy = math.sqrt(R[0, 0] * R[0, 0] + R[1, 0] * R[1, 0])
 
     singular = sy < 1e-6
@@ -101,27 +115,18 @@ def calculate(R,dst):
     print("Min value of all x: ", min(x))
     print("Min value of all y: ", min(y))
 
-    xcenter = 0.5 * (max(x) - min(x)) + min(x)
-    ycenter = 0.5 * (max(y) - min(y)) + min(y)
+    x_center = 0.5 * (max(x) - min(x)) + min(x)
+    y_center = 0.5 * (max(y) - min(y)) + min(y)
 
-    print("the center of the object is x y: ", xcenter, ycenter)
+    print("the center of the object is x y: ", x_center, y_center)
 
-    tx = (-(ycenter - 540)) * (217 / 1080) + 650  # mm
-    ty = (-(xcenter - 960)) * (388.6 / 1920) - 127
+    tx = (-(y_center - 540)) * (217 / 1080) + 650  # mm
+    ty = (-(x_center - 960)) * (388.6 / 1920) - 127
 
-    return tx,ty,ex,ey,ez
+    return tx, ty, ex, ey, ez
 
 
 if __name__ == '__main__':
-
-
-    # # define the socket IP address and port number
-    # Tcp_IP = '192.168.12.253'
-    # Tcp_Port = 1025
-
-    # for localhost testing purpose
-    Tcp_IP = '127.0.0.1'
-    Tcp_Port = 21
 
     # define socket category and socket type in our case using TCP/IP
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -163,14 +168,14 @@ if __name__ == '__main__':
     print('sending X coordinate "%s"' % message_stop)
     conn.send(message_stop)
 
-    #run surf again to make sure its accurate
-    R,dst = surf()
+    # run surf again to make sure its accurate
+    R, dst = surf()
 
     print('Transformation matrix M is:', '\n', R, '\n')
     print('Bounding box corners coordinates dst: ', '\n', dst, '\n')
 
     # calculate all the needed values
-    tx,ty,ex,ey,ez = calculate(R,dst)
+    tx, ty, ex, ey, ez = calculate(R, dst)
 
     print("returned values are", tx, ty, ex, ey, ez)
 
@@ -193,7 +198,6 @@ if __name__ == '__main__':
     message2 = bytes(str(rotation), 'ascii')
     print('sending rotation values "%s"' % message2)
     conn.send(message2)
-
 
     conn.close()
     cap.release()
