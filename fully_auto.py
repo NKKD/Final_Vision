@@ -27,7 +27,6 @@ def surf():
 
         MIN_MATCH_COUNT = 100
 
-
         ret, frame = cap.read()
 
         cap.set(3, 1920)  # Width
@@ -69,7 +68,7 @@ def surf():
                                flags=2)
             img3 = cv2.drawMatches(img1, kp1, img2, kp2, good, None, **draw_params)
 
-            plt.imshow(img3), plt.show()
+            # plt.imshow(img3), plt.show()
 
             break
 
@@ -161,7 +160,7 @@ if __name__ == '__main__':
             # print('sending X coordinate "%s"' % message_move)
             # conn.send(message_move)
             # call the surf function
-            # surf()
+            surf()
 
             # # send command to robot to stop scanning
             # stop = 2
