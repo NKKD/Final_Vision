@@ -17,7 +17,7 @@ Tcp_Port = 1025
 
 # # for localhost testing purpose
 # Tcp_IP = '127.0.0.1'
-# Tcp_Port = 21
+# Tcp_Port = 8888
 
 
 def surf():
