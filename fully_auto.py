@@ -4,22 +4,6 @@ import matplotlib.pyplot as plt
 import math
 import socket
 
-# initialize camera streaming
-cam = 1
-cap = cv2.VideoCapture(cam)
-ret, frame = cap.read()
-
-# Target Object
-img1 = cv2.imread('arduino.jpg', 0)
-
-# define the socket IP address and port number
-Tcp_IP = '192.168.12.253'
-Tcp_Port = 1025
-
-# # for localhost testing purpose
-# Tcp_IP = '127.0.0.1'
-# Tcp_Port = 21
-
 
 def surf():
     print('surf starting')
@@ -128,6 +112,22 @@ def calculate(R, dst):
 
 
 if __name__ == '__main__':
+
+    # initialize camera streaming
+    cam = 1
+    cap = cv2.VideoCapture(cam)
+    ret, frame = cap.read()
+
+    # Target Object
+    img1 = cv2.imread('arduino.jpg', 0)
+
+    # define the socket IP address and port number
+    Tcp_IP = '192.168.12.253'
+    Tcp_Port = 1025
+
+    # # for localhost testing purpose
+    # Tcp_IP = '127.0.0.1'
+    # Tcp_Port = 21
 
     # define socket category and socket type in our case using TCP/IP
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
