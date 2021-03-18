@@ -5,20 +5,17 @@ import math
 import socket
 
 # initialize camera streaming
-cam = 1
+cam = 0
 cap = cv2.VideoCapture(cam)
-ret, frame = cap.read()
 
 # Target Object
 img1 = cv2.imread('arduino.jpg', 0)
 
-# define the socket IP address and port number
-Tcp_IP = '192.168.12.253'
-Tcp_Port = 1025
 
-# # for localhost testing purpose
-# Tcp_IP = '127.0.0.1'
-# Tcp_Port = 21
+
+# for localhost testing purpose
+Tcp_IP = '127.0.0.1'
+Tcp_Port = 8880
 
 
 def surf():
@@ -69,7 +66,7 @@ def surf():
                                flags=2)
             img3 = cv2.drawMatches(img1, kp1, img2, kp2, good, None, **draw_params)
 
-            # plt.imshow(img3), plt.show()
+            plt.imshow(img3), plt.show()
 
             break
 
@@ -148,7 +145,7 @@ if __name__ == '__main__':
         # show the received data
         print("received data: ", data)
 
-        if data != b'1':
+        if data != b'1\n':
             print("Communication lost")
             break
 
@@ -161,7 +158,7 @@ if __name__ == '__main__':
             # print('sending X coordinate "%s"' % message_move)
             # conn.send(message_move)
             # call the surf function
-            surf()
+            # surf()
 
             # # send command to robot to stop scanning
             # stop = 2
