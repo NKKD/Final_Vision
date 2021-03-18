@@ -4,33 +4,15 @@ import matplotlib.pyplot as plt
 import math
 import socket
 
-# initialize camera streaming
-cam = 1
-cap = cv2.VideoCapture(cam)
-
-# Target Object
-img1 = cv2.imread('arduino.jpg', 0)
-
-# define the socket IP address and port number
-Tcp_IP = '192.168.12.253'
-Tcp_Port = 1025
-
-# # for localhost testing purpose
-# Tcp_IP = '127.0.0.1'
-# Tcp_Port = 21
 
 
-def surf():
+def surf(frame):
     print('surf starting')
 
     while True:
 
         MIN_MATCH_COUNT = 100
 
-        ret, frame = cap.read()
-
-        cap.set(3, 1920)  # Width
-        cap.set(4, 1080)  # Height
 
         img2 = frame  # Scene Image
 
@@ -128,6 +110,26 @@ def calculate(R, dst):
 
 if __name__ == '__main__':
 
+    # initialize camera streaming
+    cam = 1
+    cap = cv2.VideoCapture(cam)
+
+    ret, frame = cap.read()
+
+    cap.set(3, 1920)  # Width
+    cap.set(4, 1080)  # Height
+
+    # Target Object
+    img1 = cv2.imread('arduino.jpg', 0)
+
+    # define the socket IP address and port number
+    Tcp_IP = '192.168.12.253'
+    Tcp_Port = 1025
+
+    # # for localhost testing purpose
+    # Tcp_IP = '127.0.0.1'
+    # Tcp_Port = 21
+
     # define socket category and socket type in our case using TCP/IP
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -160,7 +162,7 @@ if __name__ == '__main__':
             # print('sending X coordinate "%s"' % message_move)
             # conn.send(message_move)
             # call the surf function
-            surf()
+            surf(frame)
 
             # # send command to robot to stop scanning
             # stop = 2
